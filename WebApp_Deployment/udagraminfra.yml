@@ -134,7 +134,7 @@ Resources:
             VpcId: !Ref VPC
             Tags: 
                 - Key: Name 
-                  Vale: !Su ${EnvironmentName} Pub sPublicRoute
+                  Value: !Sub ${EnvironmentName} Public Routes
     DefaultPublicRoute: 
         Type: AWS::EC2::Route
         DependsOn: InternetGatewayAttachment

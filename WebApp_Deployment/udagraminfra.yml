@@ -130,7 +130,7 @@ Resources:
 
     PublicRouteTable:
         Type: AWS::EC2::RouteTable
-        roperties: 
+       Properties: 
             VpcId: !Ref VPC
             Tags: 
                 - Key: Name 

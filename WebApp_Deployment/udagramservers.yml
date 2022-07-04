@@ -1,6 +1,8 @@
 Description: >
-    Alese Michael Toluwani / Udacity project
+    Carlos Rivas / Udacity 2019
+
 Parameters:
+
     EnvironmentName:
         Description: An environment name that will be prefixed to resource names
         Type: String
@@ -49,16 +51,15 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo apt-get update -y
-          sudo apt-get install apache2 -y
-          sudo systemctl start apache2.service
-	  cd /var/www/html
-         echo "it works! Udagram, Udacity!" > index.html
-      # ToDo: AMI ID of Ubuntu Linux machine. Too get one, try creating a VM from the web console. 
+          apt-get update -y
+          apt-get install apache2 -y
+          systemctl start apache2.service
+          cd /var/www/html
+          echo "it works, Udagram Udacity!" > index.html
       ImageId: ami-0729e439b6769d6ab
       SecurityGroups:
       - Ref: WebServerSecGroup
-      InstanceType: t2.medium
+      InstanceType: t3.medium
       BlockDeviceMappings:
       - DeviceName: "/dev/sdk"
         Ebs:
@@ -113,16 +114,16 @@ Resources:
       HealthCheckProtocol: HTTP
       HealthCheckTimeoutSeconds: 8
       HealthyThresholdCount: 2
-      Port: 8080
+      Port: 80
       Protocol: HTTP
       UnhealthyThresholdCount: 5
       VpcId: 
         Fn::ImportValue:
           Fn::Sub: "${EnvironmentName}-VPCID"
 Outputs:
-  WebAppLoadBalancerURL:
-      Description: A reference to the load balancer url
-      Value: 
-          Fn::Join: ["", ["http://", !GetAtt WebAppLB.DNSName]]
+   LoadBalancerURL:
+      Description: the load balancer url
+      Value:
+         Fn::Join: ["", ["http://", !GetAtt WebAppLB.DNSName]]
       Export:
-        Name: !Sub ${EnvironmentName}-LB
+         Name: !Sub ${EnvironmentName}-LB
